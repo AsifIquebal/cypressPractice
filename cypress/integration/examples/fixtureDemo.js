@@ -1,29 +1,43 @@
 /// <reference types="cypress" />
  
-import LoginPage from "../../page_objects/LoginPage"
-import BillPaymentsPage from "../../page_objects/BillPaymentsPage"
-import BasePage from "../../page_objects/BasePage"
- 
-const loginPage = new LoginPage
-const billPaymentsPage = new BillPaymentsPage
-const basePage = new BasePage
-
-describe("Bill Payment Test",()=>{
-
-    before(function () {
-        
-        cy.fixture('example')
-        .then((user) => {
-            this.user = user
+describe("Fuxture Demo",()=>{
+    let data
+    before(() => {
+        cy.log("runs once before all tests in the block")
+      })
+    beforeEach(function () {
+        cy.fixture("userData").then((user) => {
+            data = user
           })
       })
-    it("Pay a Bill",()=>{
-        cy.fixture("user").then(function(user){
-            cy.log('user: ' + user.userName)
-            cy.log('user: ' + user.passWord)
-            loginPage.login(user.userName, user.passWord)
-            billPaymentsPage.enterPayeeDetailsAndPay()
-            basePage.logOutFromApplication()
-        })
+    it("Test1",()=>{
+        cy.log('UserName: ' + data.userName)
     })
+    it("Test2",()=>{
+        cy.log('PassWord: ' + data.passWord)
+    })
+
+    
 })
+
+
+describe('With Alias', () => {
+    beforeEach(function(){
+        cy.fixture('userData').as('user')
+    })
+    // beforeEach(() => {
+    //   // runs before each test in the block
+    // })
+    // afterEach(() => {
+    //   // runs after each test in the block
+    // })
+    // after(() => {
+    //   // runs once after all tests in the block
+    // })
+    it("Test1",function () {
+        cy.log('UserName: ' + this.user.userName)
+    })
+    it("Test2",function (){
+        cy.log('PassWord: ' + this.user.passWord)
+    })
+  })
