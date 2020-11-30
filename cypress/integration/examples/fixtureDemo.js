@@ -10,6 +10,13 @@ const basePage = new BasePage
 
 describe("Bill Payment Test",()=>{
 
+    before(function () {
+        
+        cy.fixture('example')
+        .then((user) => {
+            this.user = user
+          })
+      })
     it("Pay a Bill",()=>{
         cy.fixture("user").then(function(user){
             cy.log('user: ' + user.userName)
