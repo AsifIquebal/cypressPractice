@@ -1,10 +1,21 @@
 /// <reference types="cypress" />
- 
-describe("Fuxture Demo",()=>{
+
+// If you store and access the fixture data using this test context object, make sure to use function () { ... } callbacks. 
+// Otherwise the test engine will NOT have this pointing at the test context.
+describe('Will Fail', () => {
+    beforeEach(() => {
+        cy.fixture('userData').as('user')
+    })
+    it("Test1",() => {
+        cy.log('UserName: ' + this.user.userName)
+    })
+    it("Test2",() => {
+        cy.log('PassWord: ' + this.user.passWord)
+    })
+  })
+
+describe("Fixture Demo",()=>{
     let data
-    before(() => {
-        cy.log("runs once before all tests in the block")
-      })
     beforeEach(function () {
         cy.fixture("userData").then((user) => {
             data = user
@@ -16,28 +27,19 @@ describe("Fuxture Demo",()=>{
     it("Test2",()=>{
         cy.log('PassWord: ' + data.passWord)
     })
-
-    
 })
 
-
 describe('With Alias', () => {
-    beforeEach(function(){
+    beforeEach(function () {
+        cy.log("runs once before all tests in the block")
         cy.fixture('userData').as('user')
-    })
-    // beforeEach(() => {
-    //   // runs before each test in the block
-    // })
-    // afterEach(() => {
-    //   // runs after each test in the block
-    // })
-    // after(() => {
-    //   // runs once after all tests in the block
-    // })
-    it("Test1",function () {
-        cy.log('UserName: ' + this.user.userName)
-    })
-    it("Test2",function (){
+      })
+    it("Test2", function () {
+        expect(this.user.passWord).to.equal('demo')
         cy.log('PassWord: ' + this.user.passWord)
+    })
+    it("Test1", function () {
+        expect(this.user.userName).to.equal('john')
+        cy.log('UserName: ' + this.user.userName)
     })
   })
