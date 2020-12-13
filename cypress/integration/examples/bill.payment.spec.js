@@ -10,7 +10,7 @@ const basePage = new BasePage
 
 describe("Bill Payment Test", () => {
 
-    it("Pay a Bill", () => {
+    it("Pay a Bill, get user from userData", () => {
         cy.fixture("userData").then(function (user) {
             cy.log('user: ' + user.userName)
             cy.log('user: ' + user.passWord)
