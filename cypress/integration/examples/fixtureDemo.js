@@ -6,25 +6,38 @@ describe('Will Fail', () => {
     beforeEach(() => {
         cy.fixture('userData').as('user')
     })
-    it("Test1",() => {
+    it("Test1", () => {
         cy.log('UserName: ' + this.user.userName)
     })
-    it("Test2",() => {
+    it("Test2", () => {
         cy.log('PassWord: ' + this.user.passWord)
     })
-  })
-
-describe("Fixture Demo",()=>{
+})
+describe('Will Pass', () => {
+    let user;
+    beforeEach(() => {
+        cy.fixture('userData').then((data) => {
+            user = data;
+        });
+    })
+    it("Test1", () => {
+        cy.log('UserName: ' + user.userName)
+    })
+    it("Test2", () => {
+        cy.log('PassWord: ' + user.passWord)
+    })
+})
+describe("Fixture Demo", () => {
     let data
     beforeEach(function () {
         cy.fixture("userData").then((user) => {
             data = user
-          })
-      })
-    it("Test1",()=>{
+        })
+    })
+    it("Test1", () => {
         cy.log('UserName: ' + data.userName)
     })
-    it("Test2",()=>{
+    it("Test2", () => {
         cy.log('PassWord: ' + data.passWord)
     })
 })
@@ -33,7 +46,7 @@ describe('With Alias', () => {
     beforeEach(function () {
         cy.log("runs once before all tests in the block")
         cy.fixture('userData').as('user')
-      })
+    })
     it("Test2", function () {
         expect(this.user.passWord).to.equal('demo')
         cy.log('PassWord: ' + this.user.passWord)
@@ -42,4 +55,4 @@ describe('With Alias', () => {
         expect(this.user.userName).to.equal('john')
         cy.log('UserName: ' + this.user.userName)
     })
-  })
+})
